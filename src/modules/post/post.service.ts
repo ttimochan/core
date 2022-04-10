@@ -7,4 +7,8 @@ export class PostService {
   constructor(
     @InjectModel(PostModel) public readonly model: MongooseModel<PostModel>,
   ) {}
+
+  async create(body: PostModel) {
+    return this.model.create(body)
+  }
 }

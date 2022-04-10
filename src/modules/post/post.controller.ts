@@ -1,5 +1,6 @@
-import { Controller, Get, Query } from '@nestjs/common'
+import { Body, Controller, Get, Post, Query } from '@nestjs/common'
 import { PostService } from './post.service'
+import { PostModel } from './post.model'
 import { HTTPDecorators } from '~/common/decorator/http.decorator'
 import { ApiName } from '~/common/decorator/openapi.decorator'
 import { PagerDto } from '~/shared/dto/pager.dto'
@@ -24,6 +25,11 @@ export class PostController {
         lean: true,
       },
     )
+  }
+
+  @Post('/')
+  async create(@Body() body: PostModel) {
+    return this.service.create(body)
   }
 
   @Get('/*')

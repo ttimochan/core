@@ -2,8 +2,8 @@
  * @module utils/ip
  * @description IP utility functions
  */
-import type { FastifyRequest } from 'fastify'
 import { IncomingMessage } from 'http'
+import type { FastifyRequest } from 'fastify'
 export const getIp = (request: FastifyRequest | IncomingMessage) => {
   const _ = request as any
 
@@ -23,5 +23,5 @@ export const parseRelativeUrl = (path: string) => {
   if (!path || !path.startsWith('/')) {
     return new URL('http://a.com')
   }
-  return new URL('http://a.com' + path)
+  return new URL(`http://a.com${path}`)
 }
