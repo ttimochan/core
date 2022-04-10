@@ -6,7 +6,7 @@
   "license": "MIT",
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "npm run lint-staged"
     }
   },
   "lint-staged": {
@@ -43,7 +43,8 @@
     "test:e2e": "vitest -c ./vitest-e2e.config.ts",
     "test:all": "npm run test && npm run test:e2e",
     "test:watch": "vitest --watch",
-    "test:cov": "vitest --coverage"
+    "test:cov": "vitest --coverage",
+    "lint-staged": "lint-staged"
   },
   "dependencies": {
     "@nestjs/common": "8.4.1",
