@@ -1,26 +1,32 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "CommonJS",
     "declaration": true,
+    "strictNullChecks": true,
     "removeComments": true,
-    "resolveJsonModule": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "target": "es2017",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "src",
-    "incremental": true,
-    "skipLibCheck": true,
-    "strictNullChecks": false,
+    "baseUrl": ".",
     "noImplicitAny": false,
-    "strictBindCallApply": false,
-    "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "incremental": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "paths": {
+      "~": [
+        "./src"
+      ],
+      "~/*": [
+        "./src/*"
+      ]
+    }
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.js",
-    "./ecosystem.config.js", "helper/http.util.ts"  ],
+  "exclude": [
+    "dist",
+    "tmp"
+  ]
 }

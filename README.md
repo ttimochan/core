@@ -1,51 +1,65 @@
-# GoldenSpace Server V0.x <small>Beta</small>
+# Nest Http Template
+
+A NestJS template, which used the coolest and fastest stuff.
+
+<img width="727" alt="image" src="https://user-images.githubusercontent.com/41265413/159869110-7704ddc4-d0ac-4cc4-9f34-b7b5568481f9.png">
+
+## Which Tech Stack In Use
+
+- Framework: NestJS (Based on Fastify)
+- Language: TypeScript (Best practices, Not AnyScript)
+- Database ODM: Typegoose (Write schema once all in TypeScript)
+- Bundle Toolchain: @vercel/ncc Bundle (Bundle entry, go node_modules away)
+- Testing: Vitest (Test case write in TypeScript, fast and out-of-box)
+- Package Manager: PNPM (which is fastest)
+- DevOps: Docker
+- Other: Prettier, ESLint, Husky, Bump Version, etc.
+
+## How to start development
+
+```bash
+npm run dev
+```
+
+## File Structure
 
 ```
-  ____ ____                                     
- / ___/ ___|       ___  ___ _ ____   _____ _ __ 
-| |  _\___ \ _____/ __|/ _ \ '__\ \ / / _ \ '__|
-| |_| |___) |_____\__ \  __/ |   \ V /  __/ |   
- \____|____/      |___/\___|_|    \_/ \___|_|   
+.
+├── app.config.ts                 # 主程序配置，数据库、程序、第三方，一切可配置项
+├── app.controller.ts             # 主程序根控制器
+├── app.module.ts                 # 主程序根模块，负责各业务模块的聚合
+├── common                        # 存放中间件
+│   ├── adapters                  # 适配器的配置
+│   ├── decorator                 # 业务装饰器
+│   ├── exceptions                # 自定义异常
+│   ├── filters                   # 异常处理器
+│   ├── guard                     # 守卫与鉴权
+│   ├── interceptors              # 拦截器, 数据过滤与响应格式化处理
+│   ├── middlewares               # 传统意义上的中间件
+│   └── pipes                     # 管道
+├── constants                     # 常量
+├── main.ts                       # 引入配置，启动主程序，引入各种全局服务
+├── modules                       # 业务逻辑模块
+├── processors                      # 核心辅助模块
+│   ├── cache                       # Redis 缓存相关
+│   ├── database                    # Mongo 数据库相关
+│   ├── gateway                     # Socket.IO 相关
+│   ├── helper                      # 辅助类
+│   └── logger                      # 自定义 Logger
+├── shared                          # 通用模型
+│   ├── dto                         # 数据验证模型
+│   ├── interface                   # 接口
+│   └── model                       # 基本数据模型
+├── utils                           # 工具类
+├── bootstrap.ts                    # 引导程序
+└── main.ts                         # 入口
+
 ```
 
-![total line](https://tokei.rs/b1/github/wibus-wee/GS-server) 
-![version](https://img.shields.io/github/package-json/v/wibus-wee/GS-server) 
-![language](https://img.shields.io/github/languages/top/wibus-wee/GS-server) 
-![core](https://img.shields.io/github/package-json/dependency-version/wibus-wee/GS-server/@nestjs/core) 
-![code size](https://img.shields.io/github/languages/code-size/wibus-wee/GS-server) 
-![issues](https://img.shields.io/github/issues/wibus-wee/GS-server) 
-![commit](https://img.shields.io/github/commit-activity/m/wibus-wee/GS-server) 
-[![DeepScan grade](https://deepscan.io/api/teams/14175/projects/18839/branches/473312/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=14175&pid=18839&bid=473312) 
-![commit_last](https://img.shields.io/github/last-commit/wibus-wee/GS-server) 
-[![Node.js Build CI](https://github.com/wibus-wee/GS-server/actions/workflows/build.yml/badge.svg)](https://github.com/wibus-wee/GS-server/actions/workflows/build.yml) 
-[![Deploy Server](https://github.com/wibus-wee/GS-server/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/wibus-wee/GS-server/actions/workflows/deploy.yml) 
-[![GitHub stars](https://img.shields.io/github/stars/wibus-wee/GS-server.svg?style=flat)](https://github.com/wibus-wee/GS-server/stargazers)
+## Docs
 
-the RESTful API service for G Space, powered by @nestjs.
+Please visit [docs](./docs/) folder under this project.
 
-## Install & Use
+## Authors
 
-Read [Wiki Page](https://github.com/wibus-wee/GS-server/wiki/Deploy-Server) that you can know how to install
-
-## Develop
-
-1. Fork this [Repo](https://github.com/wibus-wee/GS-server)
-2. Do some changes, and push it to GitHub
-3. **PR** your changes to my Repo
-4. become a contributor
-
-## Reference
-
-This project referred to: 
-
-- [mx-space/server-next](https://github.com/mx-space/server-next)
-
-## License
-
-此项目 GPLv3 授权开源，使用此项目进行的二次创作或者衍生项目也必须开源。
-
-## Author
-
-GS-server © Wibus, Released under the GPL-3.0 License. Created on 2021-09-25
-
-> [Personal Website](http://iucky.cn/) · [Blog](https://blog.iucky.cn/) · GitHub [@wibus-wee](https://github.com/wibus-wee/) · Telegram [@wibus✪](https://t.me/wibus_wee)
+[Innei](https://github.com/innei).

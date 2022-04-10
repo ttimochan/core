@@ -1,50 +1,44 @@
-import { Injectable, UnauthorizedException } from "@nestjs/common";
-import { UsersService } from "../users/users.service";
-import { JwtService } from "@nestjs/jwt";
-import configs from "../../configs";
-import { encryptPassword } from "../../utils/crypt.utils";
+import { Injectable } from '@nestjs/common'
+import { JwtService } from '@nestjs/jwt'
+import { DocumentType, ReturnModelType } from '@typegoose/typegoose'
+import dayjs from 'dayjs'
+import { isDate, omit } from 'lodash'
+import { customAlphabet } from 'nanoid/async'
+import { TokenDto } from './auth.controller'
+import { JwtPayload } from './interfaces/jwt-payload.interface'
+import {
+  TokenModel,
+  UserModel as User,
+  UserDocument,
+} from '~/modules/user/user.model'
+import { InjectModel } from '~/transformers/model.transformer'
+import { BusinessException } from '~/common/exceptions/business.excpetion'
+import { ErrorCodeEnum } from '~/constants/error-code.constant'
 
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly usersService: UsersService,
-    private readonly jwtService: JwtService
+    @InjectModel(User) private readonly userModel: ReturnModelType<typeof User>,
+    private readonly jwtService: JwtService,
   ) {}
 
-  async validateUser(username: string, password: string): Promise<any> {
-    const user = await this.usersService.findOne(username, true);
-    if (user) {
-      const hashedPassword = user.password;
-      const hashed = encryptPassword(password, user.uuid); // 加密密码
-      if (hashedPassword === hashed) {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { password, ...result } = user;
-        return result;
-      }else{
-        throw new UnauthorizedException('密码错误');
-      }
-    }else{
-      throw new UnauthorizedException("无法找到此用户");
-    }
-    
-  }
+  async signToken(_id: string) {
+    const { authCode } = (await this.userModel
+      .findById(_id)
+      .select('authCode'))!
 
-  // async checkUser(username: string): Promise<any> {
-  async checkUser() {
-    const user = await this.usersService.find("auth");
-    if (user) {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { password, ...result } = user[0];
-      return result;
+    const payload = {
+      _id,
+      authCode,
     }
-    return null;
-  }
 
-  async login(user: any) {
-    const payload = { username: user.username, sub: user.userId };
-    return {
-      access_token: this.jwtService.sign(payload),
-      expires: configs.expiration
-    };
+    return this.jwtService.sign(payload)
+  }
+  async verifyPayload(payload: JwtPayload): Promise<UserDocument | null> {
+    const user = await this.userModel.findById(payload._id).select('+authCode')
+    if (!user) {
+      throw new BusinessException(ErrorCodeEnum.MasterLostError)
+    }
+    return user && user.authCode === payload.authCode ? user : null
   }
 }
